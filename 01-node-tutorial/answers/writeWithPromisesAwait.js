@@ -1,7 +1,7 @@
 const { writeFile, readFile } = require("fs").promises;
 
 const file = "./temporary/fileC.txt";
-lines = [
+const lines = [
   "Hello, world!\n",
   "'hello world' is so repetitive\n",
   "more creativity is needed\n",
