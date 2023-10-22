@@ -30,26 +30,27 @@ app.get("/api/v1/products/:productID", (req, res) => {
 });
 
 app.get("/api/v1/query", (req, res) => {
-  const { search, limit } = req.query;
+  const { search, limit, minPrice, maxPrice } = req.query;
 
-  let filteredProducts = products.filter((product) =>
-    product.name.startsWith(search)
-  );
+  let filteredProducts = products;
+
+  if (search) {
+    filteredProducts = filteredProducts.filter((product) =>
+      product.name.startsWith(search)
+    );
+  }
+
+  if (minPrice && maxPrice) {
+    filteredProducts = filteredProducts.filter(
+      (product) =>
+        product.price >= parseInt(minPrice) &&
+        product.price <= parseInt(maxPrice)
+    );
+  }
 
   if (limit) {
     filteredProducts = filteredProducts.slice(0, parseInt(limit));
   }
-
-  res.json(filteredProducts);
-});
-
-app.get("/api/v1/products/price/:minPrice/:maxPrice", (req, res) => {
-  const minPrice = parseInt(req.params.minPrice);
-  const maxPrice = parseInt(req.params.maxPrice);
-
-  const filteredProducts = products.filter(
-    (product) => product.price >= minPrice && product.price <= maxPrice
-  );
 
   res.json(filteredProducts);
 });
