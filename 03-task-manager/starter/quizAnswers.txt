@@ -1,0 +1,10 @@
+1. Middleware is used to add functionality between the reciept of a request and its resolution;
+you may want to parse data within the request in a certain format like JSON or use some functions
+to route the request to different parts of your application (pages, other servers, etc.)
+
+2. CRUD stands for Create, Read, Update, Delete
+
+3a. We require the dotenv package and call its .config() method. Then we are able to access
+environment variables with process.env.VARIABLE_NAME
+
+3b. We add .env to the .gitignore file
