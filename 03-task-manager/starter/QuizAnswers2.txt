@@ -1,0 +1,4 @@
+1. We created asyncWrapper to get rid of the overhead required to use asynchronous
+  functions, namely the try/catch blocks.
+
+2. return next(createCustomError(`No task with id: ${taskID}`, 404));

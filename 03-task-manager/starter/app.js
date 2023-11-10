@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const tasks = require("./routes/tasks");
 const connectDB = require("./db/connect");
@@ -10,7 +10,11 @@ const connectDB = require("./db/connect");
 const DB_URL = process.env.MONGODB_URL;
 
 //middleware
+app.use(express.static("./public"));
 app.use(express.json());
+
+const notFound = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //routes
 app.get("/hello", (req, res) => {
@@ -19,11 +23,8 @@ app.get("/hello", (req, res) => {
 
 app.use("/api/v1/tasks", tasks);
 
-// app.get('/api/v1/tasks') - get all the tasks
-// app.post('/api/v1/tasks') - create a new task
-// app.get('/api/v1/tasks/:id') - get a single task
-// app.patch('/api/v1/tasks/:id') - update task
-// app.delete('/api/v1/tasks/:id') - delete task
+app.use(notFound);
+app.use(errorHandlerMiddleware);
 
 const start = async () => {
   try {
